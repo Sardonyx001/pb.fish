@@ -5,6 +5,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
     set -l ENDPOINT "https://0x0.st"
     set -l DATA ""
     set -l EXT ""
+
     function show_help
         echo "pb [options] filename"
         echo "or "
@@ -30,5 +31,10 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         echo "  # Upload a file to a different pastebin endpoint"
         echo "  pb -s http://0x0.st scores.txt"
     end
+
+    function show_usage
+        echo "usage: pb [-hfvcux] [-s server_address] filename"
+    end
+
     echo pb
 end
