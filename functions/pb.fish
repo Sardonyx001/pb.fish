@@ -1,7 +1,7 @@
 function pb --description "Uploads a file or data to a 0x0 paste bin service"
 
     # Init variables
-    set -l VERSION "v2023.12.04"
+    set -l VERSION "v2024.07.16"
     set -l ENDPOINT "https://0x0.st"
     set -l DATA ""
     set -l EXT ""
@@ -36,7 +36,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         echo "usage: pb [-hfvcux] [-s server_address] filename"
     end
 
-    # helper for program exit
+    # Helper exit func, supports msgs and codes
     function die
         set msg $argv[1]
         set code (math (count $argv) > 1 ? $argv[2] : 1)
