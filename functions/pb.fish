@@ -83,5 +83,23 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         set RESET ""
     end
 
+    # is not interactive shell, use stdin
+    if not test -t 0
+        if set -ql _flag_extension
+            # short-circuit stdin access to ensure binary data is transferred to curl
+            set result (cat | curl -F"file=@-;filename=null.$_flag_extension" "$ENDPOINT")
+            echo "$SUCCESS$result$RESET"
+            exit 0
+        else
+            read -zl _data
+            set data $_data
+        end
+    end
+
+    # if data variable is empty (not a pipe) use params as fallback
+    if test -z "$data"
+        set data $argv
+    end
+
     echo pb
 end
