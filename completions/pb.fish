@@ -1,0 +1,6 @@
+complete --no-files -c pb -s h -l help -d "Show help"
+complete --no-files -c pb -s v -l version -d "Show version"
+complete --no-files -c pb -s c -l color -d "Pretty color output"
+complete --no-files -c pb -s s -l server -r -d "Use alternative pastebin server address"
+complete --no-files -c pb -s e -l extension -r -d "Specify file extension used in the upload"
+complete -c pb -s f -l file -x -d "Explicitly interpret stdin as filename"
