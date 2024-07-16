@@ -18,5 +18,7 @@ jobs:
         run: |
           curl -sL https://git.io/fisher | source
           fisher install jorgebucaran/fishtape $GITHUB_WORKSPACE
+      - name: Run tests
+        run: |
           fishtape tests/*.fish
         shell: fish {0}
