@@ -90,8 +90,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
             # Pipe STDIN with cat since `</dev/null` doesn't work with fish
             # Refer to https://github.com/fish-shell/fish-shell/issues/206#issuecomment-428308434
             set result (cat | curl -F"file=@-;filename=null.$_flag_extension" "$ENDPOINT")
-            echo "$SUCCESS$result$RESET"
-            exit 0
+            die "$SUCCESS $result $RESET" 0
         else
             # Read from stdin
             read -zl _data
@@ -109,10 +108,10 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         # file mode
         if test -z "$data"
             # If no data show error
-            echo "$ERROR Provide data to upload $RESET"
+            die "$ERROR Provide data to upload $RESET" 1
         else if not test -f "$data"
-            # Pile not found with provided name
-            echo "$RESET$data $ERROR File not found. $RESET"
+            # File not found with provided name
+            die "$RESET $data $ERROR File not found. $RESET" 1
             # Attempt to split data string and upload each string as file
             for f in $data
                 # Check if file exists
@@ -124,26 +123,26 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
                         # Send file to endpoint
                         set result (curl -F"file=@$f" "$ENDPOINT")
                     end
-                    echo "$SUCCESS$result$RESET"
+                    die "$SUCCESS $result $RESET" 0
                 else
-                    echo "$ERROR File not found. $RESET"
+                    die "$ERROR File not found. $RESET" 1
                 end
             end
         else
             # Data available in file
             # Dend file to endpoint
             set result (curl -F"file=@$data" "$ENDPOINT")
-            echo "$SUCCESS$result$RESET"
+            die "$SUCCESS $result $RESET" 0
         end
     else
         # Non-file mode
         if test -z "$data"
             # If no data print error
-            echo "$ERROR No data found for upload. Please try again. $RESET"
+            die "$ERROR No data found for upload. Please try again. $RESET" 0
         else
             # Send data to endpoint
             set result (echo "$data" | curl -F"file=@-;filename=null.txt" "$ENDPOINT")
-            echo "$SUCCESS$result$RESET"
+            die "$SUCCESS $result $RESET" 1
         end
     end
 
