@@ -67,5 +67,21 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         die "" 0
     end
 
+    # Set endpoint from flag
+    if set -ql _flag_server
+        set ENDPOINT $flag_server
+    end
+
+    # Colors
+    if set -ql _flag_color
+        set SUCCESS (tput setaf 190)
+        set ERROR (tput setaf 196)
+        set RESET (tput sgr0)
+    else
+        set SUCCESS ""
+        set ERROR ""
+        set RESET ""
+    end
+
     echo pb
 end
