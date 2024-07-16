@@ -52,5 +52,20 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         exit $code
     end
 
+    argparse h/help v/version c/color f/file e/extension s/server -- $argv
+    or return
+
+    # Display current version
+    if set -ql _flag_version
+        echo "$VERSION"
+        die "" 0
+    end
+
+    # Display help
+    if set -ql _flag_help
+        show_help
+        die "" 0
+    end
+
     echo pb
 end
