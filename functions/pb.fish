@@ -3,8 +3,8 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
     # Init variables
     set -l VERSION "v2024.07.16"
     set -l ENDPOINT "https://0x0.st"
-    set -l DATA ""
     set -l EXT ""
+    set -l data ""
 
     function show_help
         echo "pb [options] filename"
@@ -52,6 +52,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         exit $code
     end
 
+    # Parse arguments
     argparse h/help v/version c/color f/file e/extension s/server -- $argv
     or return
 
@@ -83,23 +84,28 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         set RESET ""
     end
 
-    # is not interactive shell, use stdin
+    # Is not interactive shell, use stdin
     if not test -t 0
         if set -ql _flag_extension
-            # short-circuit stdin access to ensure binary data is transferred to curl
+            # Pipe STDIN with cat since `</dev/null` doesn't work with fish
+            # Refer to https://github.com/fish-shell/fish-shell/issues/206#issuecomment-428308434
             set result (cat | curl -F"file=@-;filename=null.$_flag_extension" "$ENDPOINT")
             echo "$SUCCESS$result$RESET"
             exit 0
         else
+            # Read from stdin
             read -zl _data
             set data $_data
         end
     end
 
-    # if data variable is empty (not a pipe) use params as fallback
+    # If data variable is empty (not a pipe) use params as fallback
     if test -z "$data"
         set data $argv
     end
+
+
+
 
     echo pb
 end
