@@ -36,5 +36,21 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         echo "usage: pb [-hfvcux] [-s server_address] filename"
     end
 
+    # helper for program exit
+    function die
+        set msg $argv[1]
+        set code (math (count $argv) > 1 ? $argv[2] : 1)
+
+        # output message to stdout or stderr based on code
+        if test -n "$msg"
+            if test $code -eq 0
+                echo "$msg"
+            else
+                echo "$msg" >&2
+            end
+        end
+        exit $code
+    end
+
     echo pb
 end
