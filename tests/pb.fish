@@ -1,1 +1,1 @@
-@test "Hello world" (pb) = "Hello world"
+@test pb (pb) = pb
