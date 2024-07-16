@@ -104,7 +104,48 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         set data $argv
     end
 
-
+    # Check if file flag is set
+    if set -ql _flag_file
+        # file mode
+        if test -z "$data"
+            # If no data show error
+            echo "$ERROR Provide data to upload $RESET"
+        else if not test -f "$data"
+            # Pile not found with provided name
+            echo "$RESET$data $ERROR File not found. $RESET"
+            # Attempt to split data string and upload each string as file
+            for f in $data
+                # Check if file exists
+                if test -f "$f"
+                    if set -ql _flag_extension
+                        # Send file to endpoint masked with new extension
+                        set result (curl -F"file=@$f;filename=null.$_flag_extension" "$ENDPOINT")
+                    else
+                        # Send file to endpoint
+                        set result (curl -F"file=@$f" "$ENDPOINT")
+                    end
+                    echo "$SUCCESS$result$RESET"
+                else
+                    echo "$ERROR File not found. $RESET"
+                end
+            end
+        else
+            # Data available in file
+            # Dend file to endpoint
+            set result (curl -F"file=@$data" "$ENDPOINT")
+            echo "$SUCCESS$result$RESET"
+        end
+    else
+        # Non-file mode
+        if test -z "$data"
+            # If no data print error
+            echo "$ERROR No data found for upload. Please try again. $RESET"
+        else
+            # Send data to endpoint
+            set result (echo "$data" | curl -F"file=@-;filename=null.txt" "$ENDPOINT")
+            echo "$SUCCESS$result$RESET"
+        end
+    end
 
 
     echo pb
