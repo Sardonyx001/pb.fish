@@ -30,6 +30,8 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         echo "  find . -type f -name '*.js' -print | pb -f"
         echo "  # Upload a file to a different pastebin endpoint"
         echo "  pb -s http://0x0.st scores.txt"
+        echo "  #Re-upload an image from the web"
+        echo "  curl -s https://i.imgur.com/GkxTZ3W.jpeg | pb -e 'jpeg' "
     end
 
     function show_usage
