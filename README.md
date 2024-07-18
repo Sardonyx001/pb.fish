@@ -59,8 +59,10 @@ curl -s https://tildegit.org/_/static/img/gitea-lg.png | pb -e "png"
 
 ## TODO
 
-Support more pastebin services with different options/rules for uploading files like:
+- Support more pastebin services with different options/rules for uploading files like:
 
-- https://uguu.se/
-- https://termbin.com/
-- https://privatebin.info/
+  - https://uguu.se/
+  - https://termbin.com/
+  - https://privatebin.info/
+
+- Overengineer it to be prettier with charmbraclet's [gum](https://github.com/charmbracelet/gum)
