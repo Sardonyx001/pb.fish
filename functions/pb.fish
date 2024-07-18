@@ -51,8 +51,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
                 echo "$msg" >&2
             end
         end
-        echo Returning with code $code
-        return
+        return $code
     end
 
     # Parse arguments
