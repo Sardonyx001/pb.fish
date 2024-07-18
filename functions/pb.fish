@@ -1,7 +1,7 @@
 function pb --description "Uploads a file or data to a 0x0 paste bin service"
 
     # Init variables
-    set -l VERSION "v2024.07.16"
+    set -l VERSION "v2024.07.18"
     set -l ENDPOINT "https://0x0.st"
     set -l EXT ""
     set -l data ""
