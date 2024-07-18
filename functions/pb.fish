@@ -91,7 +91,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         if set -ql _flag_extension
             # Pipe STDIN with cat since `</dev/null` doesn't work with fish
             # Refer to https://github.com/fish-shell/fish-shell/issues/206#issuecomment-428308434
-            set result (cat | curl -F"file=@-;filename=null.$_flag_extension" "$ENDPOINT")
+            set result (cat | curl -sSF"file=@-;filename=null.$_flag_extension" "$ENDPOINT")
             die "$SUCCESS $result $RESET" 0
         else
             # Read from stdin
@@ -120,10 +120,10 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
                 if test -f "$f"
                     if set -ql _flag_extension
                         # Send file to endpoint masked with new extension
-                        set result (curl -F"file=@$f;filename=null.$_flag_extension" "$ENDPOINT")
+                        set result (curl -sSF"file=@$f;filename=null.$_flag_extension" "$ENDPOINT")
                     else
                         # Send file to endpoint
-                        set result (curl -F"file=@$f" "$ENDPOINT")
+                        set result (curl -sSF"file=@$f" "$ENDPOINT")
                     end
                     die "$SUCCESS $result $RESET" 0
                 else
@@ -133,7 +133,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
         else
             # Data available in file
             # Dend file to endpoint
-            set result (curl -F"file=@$data" "$ENDPOINT")
+            set result (curl -sSF"file=@$data" "$ENDPOINT")
             die "$SUCCESS $result $RESET" 0
         end
     else
@@ -143,7 +143,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
             die "$ERROR No data found for upload. Please try again. $RESET" 0
         else
             # Send data to endpoint
-            set result (echo "$data" | curl -F"file=@-;filename=null.txt" "$ENDPOINT")
+            set result (echo "$data" | curl -sSF"file=@-;filename=null.txt" "$ENDPOINT")
             die "$SUCCESS $result $RESET" 1
         end
     end
