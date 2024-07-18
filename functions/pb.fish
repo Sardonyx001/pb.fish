@@ -41,7 +41,7 @@ function pb --description "Uploads a file or data to a 0x0 paste bin service"
     # Helper exit func, supports msgs and codes
     function die
         set msg $argv[1]
-        set code (math (count $argv) > 1 ? $argv[2] : 1)
+        set code (test (count $argv) -gt 1 && echo $argv[2] || echo 1)
 
         # output message to stdout or stderr based on code
         if test -n "$msg"
