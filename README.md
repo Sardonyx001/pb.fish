@@ -58,7 +58,7 @@ curl -s https://tildegit.org/_/static/img/gitea-lg.png | pb -e "png"
 ```
 
 ## TODO
-
+- Write tests
 - Support more pastebin services with different options/rules for uploading files like:
 
   - https://uguu.se/
